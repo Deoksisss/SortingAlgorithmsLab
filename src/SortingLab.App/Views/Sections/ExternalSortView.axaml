@@ -1,0 +1,261 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:SortingLab.App.Views.Controls"
+             xmlns:charts="using:SortingLab.App.Views.Charts"
+             x:Class="SortingLab.App.Views.Sections.ExternalSortView"
+             MaxWidth="1100" ClipToBounds="True">
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
+    <Border Classes="card" Padding="16">
+      <StackPanel Spacing="10">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="2">
+            <TextBlock Text="Таблица и ключ сортировки" Classes="h3" />
+            <TextBlock Text="Natural Merge Sort работает с реальными временными файлами; исходный CSV не изменяется."
+                       Classes="caption" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Top">
+            <Button Content="Страны"
+                    Classes="small"
+                    Command="{Binding LoadBuiltInCommand}"
+                    IsEnabled="{Binding IsInputEnabled}" />
+            <Button Content="Загрузить CSV"
+                    Classes="small primary"
+                    Command="{Binding LoadCustomCommand}"
+                    IsEnabled="{Binding IsInputEnabled}" />
+          </StackPanel>
+        </Grid>
+
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+          <StackPanel Spacing="2">
+            <TextBlock Text="{Binding SourceName}" FontWeight="SemiBold" FontSize="12" />
+            <TextBlock Text="{Binding RowCountText}" Classes="caption" />
+          </StackPanel>
+          <TextBlock Grid.Column="1"
+                     Text="{Binding SortKeyDescription}"
+                     Classes="caption"
+                     VerticalAlignment="Center" />
+        </Grid>
+
+        <Grid ColumnDefinitions="1.1*,1.1*,1*,1*,Auto" ColumnSpacing="10">
+          <StackPanel Spacing="4" IsVisible="{Binding HasContinentColumn}">
+            <TextBlock Text="Континент" Classes="fieldLabel" />
+            <ComboBox ItemsSource="{Binding Continents}"
+                      SelectedItem="{Binding SelectedContinent}"
+                      IsEnabled="{Binding IsInputEnabled}" />
+          </StackPanel>
+
+          <StackPanel Grid.Column="1" Spacing="4">
+            <TextBlock Text="Ключевой столбец" Classes="fieldLabel" />
+            <ComboBox ItemsSource="{Binding Columns}"
+                      SelectedItem="{Binding SelectedColumn}"
+                      IsEnabled="{Binding IsInputEnabled}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Column="2" Spacing="4">
+            <TextBlock Text="Тип ключа" Classes="fieldLabel" />
+            <ComboBox ItemsSource="{Binding KeyTypes}"
+                      SelectedItem="{Binding SelectedKeyType}"
+                      IsEnabled="{Binding IsInputEnabled}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Column="3" Spacing="4">
+            <TextBlock Text="Направление" Classes="fieldLabel" />
+            <ComboBox ItemsSource="{Binding Directions}"
+                      SelectedItem="{Binding SelectedDirection}"
+                      IsEnabled="{Binding IsInputEnabled}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <Button Grid.Column="4"
+                  Content="Сбросить фильтры"
+                  Classes="small ghost"
+                  VerticalAlignment="Bottom"
+                  Command="{Binding ResetFiltersCommand}"
+                  IsEnabled="{Binding IsInputEnabled}" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+          <TextBlock Text="{Binding LoadMessage}" Classes="caption" />
+          <TextBlock Grid.Column="1" Text="{Binding FilterInfo}" Classes="caption" />
+        </Grid>
+
+        <Border Classes="errorBanner" IsVisible="{Binding HasLoadError}">
+          <TextBlock Text="{Binding LoadMessage}" Classes="dangerText" FontSize="12" />
+        </Border>
+
+        <TextBlock Text="{Binding LoadWarnings}"
+                   Classes="caption"
+                   IsVisible="{Binding HasLoadWarnings}"
+                   Foreground="{DynamicResource WarningBrush}" />
+      </StackPanel>
+    </Border>
+
+    <controls:PlaybackPanel Grid.Row="1" DataContext="{Binding Playback}" />
+
+    <controls:ResponsiveTwoColumnPanel Grid.Row="2" Breakpoint="1080" SideWidth="370" ColumnSpacing="12" RowSpacing="12">
+      <Grid RowDefinitions="Auto,*,*" RowSpacing="12">
+        <Border Classes="card" Padding="14">
+          <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Text="Естественные серии" Classes="h3" />
+              <TextBlock Grid.Column="1" Text="{Binding CurrentPass}" Classes="caption" VerticalAlignment="Center" />
+            </Grid>
+            <charts:RunTimelineControl Grid.Row="1"
+                                       Runs="{Binding Runs}"
+                                       Revision="{Binding RunsRevision}"
+                                       Height="58" />
+            <TextBlock Grid.Row="2" Text="{Binding RunsSummary}" Classes="caption" />
+          </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Classes="card" Padding="14">
+          <Grid RowDefinitions="Auto,*" RowSpacing="6">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2">
+                <TextBlock Text="Исходная таблица" Classes="h3" />
+                <TextBlock Text="Полные записи; сравниваемые строки подсвечиваются."
+                           Classes="caption" />
+              </StackPanel>
+              <TextBlock Grid.Column="1" Text="{Binding RowCountText}" Classes="caption" VerticalAlignment="Top" />
+            </Grid>
+            <DataGrid x:Name="SourceGrid"
+                      Grid.Row="1"
+                      ItemsSource="{Binding SourceRows}"
+                      Height="200">
+              <DataGrid.Styles>
+                <Style Selector="DataGridRow">
+                  <Setter Property="Background" Value="{Binding Highlight, Converter={StaticResource HighlightBrush}}" />
+                </Style>
+              </DataGrid.Styles>
+            </DataGrid>
+          </Grid>
+        </Border>
+
+        <Border Grid.Row="2" Classes="card" Padding="14">
+          <Grid RowDefinitions="Auto,*" RowSpacing="6">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2">
+                <TextBlock Text="{Binding ResultTitle}" Classes="h3" />
+                <TextBlock Text="{Binding SelectedRecordText}" Classes="caption" />
+              </StackPanel>
+              <TextBlock Grid.Column="1" Text="{Binding RunsSummary}" Classes="caption" VerticalAlignment="Top" />
+            </Grid>
+            <DataGrid x:Name="ResultGrid"
+                      Grid.Row="1"
+                      ItemsSource="{Binding ResultRows}"
+                      Height="200">
+              <DataGrid.Styles>
+                <Style Selector="DataGridRow">
+                  <Setter Property="Background" Value="{Binding Highlight, Converter={StaticResource HighlightBrush}}" />
+                </Style>
+              </DataGrid.Styles>
+            </DataGrid>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <ScrollViewer Grid.Column="1" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="500">
+        <StackPanel Spacing="12">
+          <controls:InfoCard Descriptor="{Binding AlgorithmInfo}" />
+
+          <Border Classes="card">
+            <StackPanel Spacing="9">
+              <TextBlock Text="Сравниваемые записи" Classes="h3" />
+              <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                <Border Classes="innerCard" Padding="10">
+                  <StackPanel Spacing="4">
+                    <TextBlock Text="Слева" Classes="eyebrow" />
+                    <TextBlock Text="{Binding LeftKey}" FontWeight="SemiBold" FontSize="13" />
+                    <ItemsControl ItemsSource="{Binding LeftCandidate.Fields}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}" Classes="caption" TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Classes="innerCard" Padding="10">
+                  <StackPanel Spacing="4">
+                    <TextBlock Text="Справа" Classes="eyebrow" />
+                    <TextBlock Text="{Binding RightKey}" FontWeight="SemiBold" FontSize="13" />
+                    <ItemsControl ItemsSource="{Binding RightCandidate.Fields}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                          <TextBlock Text="{Binding}" Classes="caption" TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                  </StackPanel>
+                </Border>
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="card">
+            <StackPanel Spacing="10">
+              <TextBlock Text="Статистика файловых операций" Classes="h3" />
+              <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                <controls:StatTile Label="Сравнения"
+                                   Value="{Binding Playback.Statistics.Comparisons, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Column="1" Label="Чтение записей"
+                                   Value="{Binding Playback.Statistics.Reads, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="1" Label="Запись в файлы"
+                                   Value="{Binding Playback.Statistics.Writes, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="1" Grid.Column="1" Label="Всего операций"
+                                   Value="{Binding Playback.Statistics.TotalOperations, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="2" Label="Время"
+                                   Value="{Binding Playback.Statistics.ElapsedText}" />
+                <controls:StatTile Grid.Row="2" Grid.Column="1" Label="Шагов"
+                                   Value="{Binding Playback.StepCount, StringFormat={}{0:N0}}" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="card">
+            <StackPanel Spacing="9">
+              <TextBlock Text="Сохранение результата" Classes="h3" />
+              <TextBlock Text="{Binding SaveMessage}" Classes="caption" />
+              <TextBlock Text="{Binding ResultPath}"
+                         Classes="caption"
+                         IsVisible="{Binding HasResultPath}"
+                         TextWrapping="Wrap" />
+              <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="Сохранить CSV"
+                        Classes="primary small"
+                        Command="{Binding SaveResultCommand}" />
+                <Button Content="Открыть папку"
+                        Classes="small ghost"
+                        Command="{Binding OpenFolderCommand}" />
+              </StackPanel>
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+    </controls:ResponsiveTwoColumnPanel>
+
+    <controls:JournalPanel Grid.Row="3"
+                           Title="Журнал внешней сортировки"
+                           Items="{Binding Playback.Log}"
+                           Height="170" />
+  </Grid>
+  </ScrollViewer>
+</UserControl>

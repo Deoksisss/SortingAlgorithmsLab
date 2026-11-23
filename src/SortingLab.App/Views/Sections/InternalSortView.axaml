@@ -1,0 +1,240 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:SortingLab.App.Views.Controls"
+             xmlns:charts="using:SortingLab.App.Views.Charts"
+             x:Class="SortingLab.App.Views.Sections.InternalSortView"
+             MaxWidth="1100" ClipToBounds="True">
+  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="12">
+    <Border Classes="card" Padding="16">
+      <StackPanel Spacing="10">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel Spacing="2">
+            <TextBlock Text="Исходные данные" Classes="h3" />
+            <TextBlock Text="{Binding InputHint}" Classes="caption" />
+          </StackPanel>
+          <Border Grid.Column="1" Classes="pill" VerticalAlignment="Top">
+            <TextBlock Text="До 200 элементов" FontSize="10" />
+          </Border>
+        </Grid>
+
+        <Grid ColumnDefinitions="220,110,110,110,Auto,*" ColumnSpacing="10">
+          <StackPanel Grid.Column="0" Spacing="4">
+            <TextBlock Text="Алгоритм" Classes="fieldLabel" />
+            <ComboBox ItemsSource="{Binding Algorithms}"
+                      SelectedItem="{Binding SelectedAlgorithm}"
+                      IsEnabled="{Binding IsInputEnabled}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+
+          <StackPanel Grid.Column="1" Spacing="4">
+            <TextBlock Text="Размер" Classes="fieldLabel" />
+            <NumericUpDown Minimum="0" Maximum="200" Increment="1" FormatString="0"
+                           Value="{Binding ArraySize}"
+                           IsEnabled="{Binding IsInputEnabled}" />
+          </StackPanel>
+
+          <StackPanel Grid.Column="2" Spacing="4">
+            <TextBlock Text="Минимум" Classes="fieldLabel" />
+            <NumericUpDown Minimum="-9999" Maximum="9999" Increment="1" FormatString="0"
+                           Value="{Binding MinValue}"
+                           IsEnabled="{Binding IsInputEnabled}" />
+          </StackPanel>
+
+          <StackPanel Grid.Column="3" Spacing="4">
+            <TextBlock Text="Максимум" Classes="fieldLabel" />
+            <NumericUpDown Minimum="-9999" Maximum="9999" Increment="1" FormatString="0"
+                           Value="{Binding MaxValue}"
+                           IsEnabled="{Binding IsInputEnabled}" />
+          </StackPanel>
+
+          <Button Grid.Column="4"
+                  Content="Сгенерировать"
+                  Classes="primary"
+                  VerticalAlignment="Bottom"
+                  Command="{Binding GenerateCommand}"
+                  IsEnabled="{Binding IsInputEnabled}" />
+
+          <TextBlock Grid.Column="5"
+                     Text="{Binding ArraySummary}"
+                     Classes="caption"
+                     VerticalAlignment="Bottom"
+                     HorizontalAlignment="Right"
+                     Margin="0,0,0,9" />
+        </Grid>
+
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+          <TextBox Text="{Binding ManualInput}"
+                   Watermark="Ручной ввод: 5, 3, 8, 1, 12"
+                   IsEnabled="{Binding IsInputEnabled}" />
+          <Button Grid.Column="1"
+                  Content="Применить"
+                  Classes="small"
+                  Command="{Binding ApplyManualCommand}"
+                  IsEnabled="{Binding IsInputEnabled}" />
+          <Button Grid.Column="2"
+                  Content="Очистить"
+                  Classes="small ghost"
+                  Command="{Binding ClearCommand}"
+                  IsEnabled="{Binding IsInputEnabled}" />
+        </Grid>
+
+        <Border Classes="errorBanner" IsVisible="{Binding HasValidationError}">
+          <TextBlock Text="{Binding ValidationMessage}" Classes="dangerText" FontSize="12" />
+        </Border>
+      </StackPanel>
+    </Border>
+
+    <controls:PlaybackPanel Grid.Row="1" DataContext="{Binding Playback}" />
+
+    <controls:ResponsiveTwoColumnPanel Grid.Row="2" Breakpoint="1080" SideWidth="370" ColumnSpacing="12" RowSpacing="12">
+      <Grid RowDefinitions="Auto,*" RowSpacing="12">
+        <Border Classes="card" Padding="16" MinHeight="260">
+          <Grid RowDefinitions="Auto,*" RowSpacing="8">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2">
+                <TextBlock Text="Визуализация" Classes="h3" />
+                <TextBlock Text="Каждый столбец — элемент массива; цвет показывает текущую операцию."
+                           Classes="caption" />
+              </StackPanel>
+              <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,0,0,0">
+                  <Border Width="9" Height="9" CornerRadius="2" Background="#CBD5E1" />
+                  <TextBlock Text="обычный" Classes="caption" FontSize="10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,0,0,0">
+                  <Border Width="9" Height="9" CornerRadius="2" Background="#F59E0B" />
+                  <TextBlock Text="сравнение" Classes="caption" FontSize="10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,0,0,0">
+                  <Border Width="9" Height="9" CornerRadius="2" Background="#2563EB" />
+                  <TextBlock Text="операция" Classes="caption" FontSize="10" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,0,0,0">
+                  <Border Width="9" Height="9" CornerRadius="2" Background="#0F766E" />
+                  <TextBlock Text="готово" Classes="caption" FontSize="10" />
+                </StackPanel>
+              </WrapPanel>
+            </Grid>
+
+            <TabControl Grid.Row="1" Margin="0,4,0,0">
+              <TabItem Header="Столбцы">
+                <Grid RowDefinitions="*,Auto" RowSpacing="8">
+                  <charts:ArrayBarChart ItemsSource="{Binding Bars}"
+                                        Revision="{Binding VisualRevision}"
+                                        MinHeight="205" />
+                  <Border Grid.Row="1"
+                          Classes="innerCard"
+                          Padding="10"
+                          IsVisible="{Binding HasResult}">
+                    <StackPanel Spacing="4">
+                      <TextBlock Text="Результат Tournament Sort" Classes="caption" FontWeight="SemiBold" />
+                      <charts:ArrayBarChart ItemsSource="{Binding ResultBars}"
+                                            Revision="{Binding VisualRevision}"
+                                            Height="90" />
+                    </StackPanel>
+                  </Border>
+                </Grid>
+              </TabItem>
+              <TabItem Header="Турнирное дерево" IsVisible="{Binding IsTournament}">
+                <Grid RowDefinitions="*,Auto" RowSpacing="4">
+                  <Viewbox Stretch="Uniform" Height="235">
+                    <charts:TournamentTreeControl Width="900" Height="300" Snapshot="{Binding Tournament}" />
+                  </Viewbox>
+                  <TextBlock Grid.Row="1"
+                             Text="В узлах — индексы победителей; под листьями — значения элементов."
+                             Classes="caption" />
+                </Grid>
+              </TabItem>
+            </TabControl>
+          </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Classes="card" Padding="16">
+          <Grid RowDefinitions="Auto,*" RowSpacing="8">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="2">
+                <TextBlock Text="Таблица элементов" Classes="h3" />
+                <TextBlock Text="Индекс, значение и состояние элемента."
+                           Classes="caption" />
+              </StackPanel>
+              <Border Grid.Column="1" Classes="pill" VerticalAlignment="Top">
+                <TextBlock Text="{Binding ArraySummary}" FontSize="10" />
+              </Border>
+            </Grid>
+
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Cells}" Height="180">
+              <DataGrid.Styles>
+                <Style Selector="DataGridRow">
+                  <Setter Property="Background" Value="{Binding State, Converter={StaticResource HighlightBrush}}" />
+                </Style>
+              </DataGrid.Styles>
+              <DataGrid.Columns>
+                <DataGridTextColumn Header="Индекс" Binding="{Binding Index}" Width="100" />
+                <DataGridTextColumn Header="Значение" Binding="{Binding Value}" Width="130" />
+                <DataGridTextColumn Header="Состояние" Binding="{Binding StateText}" Width="*" />
+              </DataGrid.Columns>
+            </DataGrid>
+          </Grid>
+        </Border>
+      </Grid>
+
+      <ScrollViewer Grid.Column="1" x:Name="RightPanel" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" MaxHeight="470">
+        <StackPanel Spacing="12">
+          <controls:InfoCard Descriptor="{Binding AlgorithmInfo}" />
+
+          <controls:ExplanationPanel Title="{Binding Playback.CurrentTitle}"
+                                     Explanation="{Binding Playback.CurrentExplanation}"
+                                     Kind="{Binding Playback.CurrentKind}" />
+
+          <Border Classes="card">
+            <StackPanel Spacing="10">
+              <TextBlock Text="Статистика" Classes="h3" />
+              <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                <controls:StatTile Label="Сравнения"
+                                   Value="{Binding Playback.Statistics.Comparisons, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Column="1" Label="Перестановки"
+                                   Value="{Binding Playback.Statistics.Swaps, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="1" Label="Перемещения"
+                                   Value="{Binding Playback.Statistics.Moves, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="1" Grid.Column="1" Label="Всего операций"
+                                   Value="{Binding Playback.Statistics.TotalOperations, StringFormat={}{0:N0}}" />
+                <controls:StatTile Grid.Row="2" Label="Время"
+                                   Value="{Binding Playback.Statistics.ElapsedText}" />
+                <controls:StatTile Grid.Row="2" Grid.Column="1" Label="Шагов"
+                                   Value="{Binding Playback.StepCount, StringFormat={}{0:N0}}" />
+              </Grid>
+            </StackPanel>
+          </Border>
+
+          <Border Classes="card">
+            <StackPanel Spacing="8">
+              <TextBlock Text="Массивы" Classes="h3" />
+              <TextBlock Text="Исходный" Classes="fieldLabel" />
+              <SelectableTextBlock Text="{Binding OriginalArrayText}"
+                                   Classes="mono"
+                                   TextWrapping="Wrap"
+                                   MaxHeight="100" />
+              <TextBlock Text="Отсортированный" Classes="fieldLabel" Margin="0,4,0,0" />
+              <SelectableTextBlock Text="{Binding SortedArrayText}"
+                                   Classes="mono"
+                                   TextWrapping="Wrap"
+                                   MaxHeight="100" />
+            </StackPanel>
+          </Border>
+        </StackPanel>
+      </ScrollViewer>
+    </controls:ResponsiveTwoColumnPanel>
+
+    <controls:JournalPanel Grid.Row="3"
+                           Title="Журнал операций"
+                           Items="{Binding Playback.Log}"
+                           Height="170" />
+  </Grid>
+  </ScrollViewer>
+</UserControl>
