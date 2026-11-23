@@ -1,0 +1,52 @@
+# .NET build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+*.DotSettings.user
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+coverage*.xml
+coverage*.json
+coverage*.info
+TestResults/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.assets.json
+
+# Avalonia
+*.axaml.g.cs
+*.g.cs
+
+# Publish output
+publish/
+artifacts/
+out/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temporary / local files
+*.tmp
+*.temp
+*.log
+*.bak
+*.orig
+*.rej
+local.settings.json

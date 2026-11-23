@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>11.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+    <AvaloniaVersion>11.3.23</AvaloniaVersion>
+    <Company>Sorting Algorithms Lab</Company>
+    <Product>Практическое задание №4 — Алгоритмы сортировки</Product>
+    <Copyright>Учебный проект</Copyright>
+  </PropertyGroup>
+</Project>
