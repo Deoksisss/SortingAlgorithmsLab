@@ -34,7 +34,7 @@
                              IsEnabled="{Binding CanEditText}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="4">
-              <TextBlock Text="Seed" Classes="fieldLabel" />
+              <TextBlock Text="Зерно" Classes="fieldLabel" />
               <NumericUpDown Minimum="-2147483648" Maximum="2147483647" Increment="1" FormatString="0"
                              Value="{Binding Seed}"
                              IsEnabled="{Binding CanEditText}" />
@@ -229,7 +229,7 @@
                              IsEnabled="{Binding CanEditText}" />
             </StackPanel>
             <StackPanel Grid.Column="2" Spacing="4">
-              <TextBlock Text="Seed" Classes="fieldLabel" />
+              <TextBlock Text="Зерно" Classes="fieldLabel" />
               <NumericUpDown Minimum="-2147483648" Maximum="2147483647" Increment="1" FormatString="0"
                              Value="{Binding ExperimentSeed}"
                              IsEnabled="{Binding CanEditText}" />

@@ -93,7 +93,9 @@
         </Grid>
 
         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-          <TextBlock Text="{Binding LoadMessage}" Classes="caption" />
+          <TextBlock Text="{Binding LoadMessage}"
+                     Classes="caption"
+                     IsVisible="{Binding !HasLoadError}" />
           <TextBlock Grid.Column="1" Text="{Binding FilterInfo}" Classes="caption" />
         </Grid>
 

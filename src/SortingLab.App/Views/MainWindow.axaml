@@ -23,8 +23,8 @@
                     VerticalAlignment="Center" />
             </Border>
             <StackPanel VerticalAlignment="Center" Spacing="1">
-              <TextBlock Text="Sorting Lab" FontSize="16" FontWeight="SemiBold" />
-              <TextBlock Text="алгоритмы сортировки" Classes="caption" />
+              <TextBlock Text="Лаборатория" FontSize="16" FontWeight="SemiBold" />
+              <TextBlock Text="сортировок" Classes="caption" />
             </StackPanel>
           </StackPanel>
 

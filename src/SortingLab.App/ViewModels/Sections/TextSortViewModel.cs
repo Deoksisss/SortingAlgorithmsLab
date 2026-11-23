@@ -207,7 +207,7 @@ public sealed partial class TextSortViewModel : ObservableObject
             (int)GeneratedWordCount,
             seed,
             SelectedLanguage?.Value ?? TextLanguage.English);
-        SetText(text, $"Сгенерированный текст · seed {seed}");
+        SetText(text, $"Сгенерированный текст · зерно {seed}");
     }
 
     [RelayCommand]

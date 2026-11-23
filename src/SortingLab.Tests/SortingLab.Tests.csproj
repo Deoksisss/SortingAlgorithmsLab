@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\SortingLab.App\Data\countries.csv"
+          Link="Data\countries.csv"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 </Project>
