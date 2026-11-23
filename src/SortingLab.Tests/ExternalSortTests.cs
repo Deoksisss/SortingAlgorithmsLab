@@ -81,6 +81,9 @@ public sealed class ExternalSortTests
             Assert.True(result.Statistics.Comparisons > 0);
             Assert.Contains(steps, step => step.Kind == ExternalStepKind.MergeStarted);
             Assert.Contains(steps, step => step.Kind == ExternalStepKind.WriteRecord);
+            Assert.Contains(steps, step => step.Kind == ExternalStepKind.FileWrite);
+            Assert.True(result.Statistics.Reads > 0);
+            Assert.True(result.Statistics.Writes > 0);
             Assert.Equal(steps.Count, steps[^1].Number);
         }
         finally
