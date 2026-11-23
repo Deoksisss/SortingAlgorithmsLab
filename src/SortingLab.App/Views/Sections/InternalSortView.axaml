@@ -233,8 +233,7 @@
 
     <controls:JournalPanel Grid.Row="3"
                            Title="Журнал операций"
-                           Items="{Binding Playback.Log}"
-                           Height="170" />
+                           Items="{Binding Playback.Log}" />
   </Grid>
   </ScrollViewer>
 </UserControl>
