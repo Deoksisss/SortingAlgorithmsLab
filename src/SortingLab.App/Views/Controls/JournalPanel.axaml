@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SortingLab.App.Views.Controls.JournalPanel"
+             x:Name="Root">
+  <Border Classes="card" Padding="16">
+    <Grid RowDefinitions="Auto,*" RowSpacing="10">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="2">
+          <TextBlock Text="{Binding Title, ElementName=Root}" Classes="h3" />
+          <TextBlock Text="Все сравнения, перестановки и файловые операции"
+                     Classes="caption" />
+        </StackPanel>
+        <Border Grid.Column="1" Classes="pill" VerticalAlignment="Top">
+          <TextBlock Text="Пошаговый журнал" FontSize="10" />
+        </Border>
+      </Grid>
+
+      <DataGrid x:Name="LogGrid"
+                Grid.Row="1"
+                ItemsSource="{Binding Items, ElementName=Root}"
+                MinHeight="120"
+                Background="Transparent">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="№" Binding="{Binding Number}" Width="54" />
+          <DataGridTextColumn Header="Тип" Binding="{Binding Kind}" Width="128" />
+          <DataGridTextColumn Header="Действие" Binding="{Binding Details}" Width="220" />
+          <DataGridTemplateColumn Header="Пояснение" Width="*">
+            <DataGridTemplateColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock Text="{Binding Explanation}"
+                           TextTrimming="CharacterEllipsis"
+                           VerticalAlignment="Center"
+                           ToolTip.Tip="{Binding Explanation}" />
+              </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+          </DataGridTemplateColumn>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
+  </Border>
+</UserControl>

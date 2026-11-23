@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Deterministic>true</Deterministic>
     <AvaloniaVersion>11.3.23</AvaloniaVersion>
+    <NoWarn>$(NoWarn);NU1900</NoWarn>
     <Company>Sorting Algorithms Lab</Company>
     <Product>Практическое задание №4 — Алгоритмы сортировки</Product>
     <Copyright>Учебный проект</Copyright>

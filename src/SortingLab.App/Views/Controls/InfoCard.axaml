@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="SortingLab.App.Views.Controls.InfoCard"
+             x:Name="Root">
+  <Border Classes="card">
+    <StackPanel Spacing="12">
+      <StackPanel Orientation="Horizontal" Spacing="10">
+        <TextBlock Text="{Binding Descriptor.Name, ElementName=Root}" Classes="h3" />
+        <Border Classes="badge" VerticalAlignment="Center">
+          <TextBlock Text="{Binding Descriptor.Category, ElementName=Root}"
+                     FontSize="10"
+                     FontWeight="SemiBold"
+                     Foreground="{DynamicResource AccentBrush}" />
+        </Border>
+      </StackPanel>
+
+      <TextBlock Text="{Binding Descriptor.ShortDescription, ElementName=Root}"
+                 Classes="secondary"
+                 FontSize="12" />
+
+      <Border Classes="divider" />
+
+      <StackPanel Spacing="3">
+        <TextBlock Text="Идея" Classes="eyebrow" />
+        <TextBlock Text="{Binding Descriptor.Idea, ElementName=Root}" FontSize="12" />
+      </StackPanel>
+
+      <StackPanel Spacing="3">
+        <TextBlock Text="Принцип" Classes="eyebrow" />
+        <TextBlock Text="{Binding Descriptor.Principle, ElementName=Root}" FontSize="12" />
+      </StackPanel>
+
+      <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+        <StackPanel Spacing="3" Grid.Column="0">
+          <TextBlock Text="Сложность" Classes="eyebrow" />
+          <TextBlock Text="{Binding Descriptor.TimeComplexity, ElementName=Root}" FontSize="12" />
+        </StackPanel>
+        <StackPanel Spacing="3" Grid.Column="1">
+          <TextBlock Text="Память" Classes="eyebrow" />
+          <TextBlock Text="{Binding Descriptor.SpaceComplexity, ElementName=Root}" FontSize="12" />
+        </StackPanel>
+      </Grid>
+
+      <StackPanel Spacing="3">
+        <TextBlock Text="Особенности" Classes="eyebrow" />
+        <TextBlock Text="{Binding Descriptor.Features, ElementName=Root}" FontSize="12" />
+      </StackPanel>
+    </StackPanel>
+  </Border>
+</UserControl>
