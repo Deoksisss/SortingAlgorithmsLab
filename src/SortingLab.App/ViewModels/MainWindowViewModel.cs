@@ -14,7 +14,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
     private string _sectionTitle = "Внутренняя сортировка";
 
     [ObservableProperty]
-    private string _sectionSubtitle = "Odd-Even Sort и Tournament Sort: пошаговая визуализация, дерево и журнал операций.";
+    private string _sectionSubtitle = "Odd-Even, Tournament, Gnome и Merge Sort: пошаговая визуализация, деревья и журнал операций.";
 
     [ObservableProperty]
     private bool _isInternalSelected = true;
@@ -67,7 +67,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
             default:
                 CurrentSection = InternalSort;
                 SectionTitle = "Внутренняя сортировка";
-                SectionSubtitle = "Odd-Even Sort и Tournament Sort: пошаговая визуализация, дерево и журнал операций.";
+                SectionSubtitle = "Odd-Even, Tournament, Gnome и Merge Sort: пошаговая визуализация, деревья и журнал операций.";
                 IsInternalSelected = true;
                 IsExternalSelected = false;
                 IsTextSelected = false;
