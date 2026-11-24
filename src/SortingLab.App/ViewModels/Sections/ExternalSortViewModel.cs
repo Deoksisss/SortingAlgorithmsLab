@@ -118,7 +118,10 @@ public sealed partial class ExternalSortViewModel : ObservableObject
         SelectedKeyType = KeyTypes[0];
         SelectedDirection = Directions[0];
 
-        Playback = new PlaybackViewModel();
+        Playback = new PlaybackViewModel
+        {
+            StepDelayMilliseconds = 20
+        };
         Playback.PropertyChanged += OnPlaybackPropertyChanged;
         Playback.Configure(
             CreateStream,
