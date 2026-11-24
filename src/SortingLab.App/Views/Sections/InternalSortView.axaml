@@ -101,6 +101,11 @@
                 <TextBlock Text="Визуализация" Classes="h3" />
                 <TextBlock Text="Каждый столбец — элемент массива; цвет показывает текущую операцию."
                            Classes="caption" />
+                <TextBlock Text="{Binding VisualStateText}"
+                           Classes="caption"
+                           Foreground="{DynamicResource AccentBrush}"
+                           FontWeight="SemiBold"
+                           IsVisible="{Binding IsVisualStateVisible}" />
               </StackPanel>
               <WrapPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Spacing="4" Margin="8,0,0,0">
