@@ -8,8 +8,5 @@ public enum RowHighlight
     Selected,
     Excluded,
     Sorted,
-    Written,
-    Range,
-    LeftRange,
-    RightRange
+    Written
 }

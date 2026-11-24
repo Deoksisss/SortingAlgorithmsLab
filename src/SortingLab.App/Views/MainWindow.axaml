@@ -45,7 +45,7 @@
                       VerticalAlignment="Center" />
                 <StackPanel Grid.Column="1" Spacing="1">
                   <TextBlock Text="Внутренняя сортировка" FontSize="13" />
-                  <TextBlock Text="Odd-Even · Tournament" Classes="caption" FontSize="10" />
+                  <TextBlock Text="Odd-Even · Tournament · Gnome" Classes="caption" FontSize="10" />
                 </StackPanel>
               </Grid>
             </Button>
